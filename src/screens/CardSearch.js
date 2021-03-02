@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput ,Dimensions,ActivityIndicator,FlatList,Image,ImageBackground} from 'react-native'
+import { Text, View, TextInput, Dimensions, ActivityIndicator, FlatList, Image, ImageBackground } from 'react-native'
 import FlipCard from 'react-native-flip-card'
 import { AppContext } from '../context/AppContext'
 import { getSearchingCardList } from '../services/api'
@@ -8,7 +8,7 @@ import Styles from './style'
 let ScreenHeight = Dimensions.get("window").height;
 
 class CardSearch extends Component {
-    
+
     async onChangeText(text) {
         this.context.setSpinner(true);
         this.context.setSearchCardText(text)
@@ -19,9 +19,9 @@ class CardSearch extends Component {
 
     renderItem = ({ item }) => {
         return (
-            <FlipCard 
-            flipHorizontal={true}
-            flipVertical={false}>
+            <FlipCard
+                flipHorizontal={true}
+                flipVertical={false}>
                 <View >
                     {
                         item.img !== undefined ?
@@ -43,24 +43,35 @@ class CardSearch extends Component {
                         {item.name}
                     </Text>
                 </View>
-                <View style={{margin:20, height: 580}}>
-                    
-                    <ImageBackground style={{ flex: 1, resizeMode: 'stretch'}}
-                                    source={Images.cardBack}>
-                    <View style={{backgroundColor:'rgba(0, 0, 0, 0.78)',height:580,justifyContent:'center',alignItems:'center'}}>
-                        <Text style={[Styles.whiteText,{marginTop:10}]}>Name : {item.name} </Text>
-                        <Text style={[Styles.whiteText,{marginTop:10}]}>Class : {item.playerClass} </Text>
-                        <Text style={[Styles.whiteText,{marginTop:10}]}>Type : {item.type} </Text>
-                        <Text style={[Styles.whiteText,{marginTop:10}]}>Card Set : {item.cardSet} </Text>
-                        <Text style={[Styles.whiteText,{marginTop:10}]}>Card Id : {item.cardId} </Text>
-                        <Text style={[Styles.whiteText,{marginTop:10}]}>Mechanics : {item.mechanics!==undefined?item.mechanics.map(x=>{return x.name+' '}):'-'} </Text>
-                    </View>
+                <View style={{ margin: 20, height: 580 }}>
+
+                    <ImageBackground style={{ flex: 1, resizeMode: 'stretch' }}
+                        source={Images.cardBack}>
+                        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.78)', height: 580, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={cardBackTexts}>Name : {item.name} </Text>
+                            <Text style={cardBackTexts}>Class : {item.playerClass} </Text>
+                            <Text style={cardBackTexts}>Type : {item.type} </Text>
+                            <Text style={cardBackTexts}>Card Set : {item.cardSet} </Text>
+                            <Text style={cardBackTexts}>Card Id : {item.cardId} </Text>
+                            <Text style={cardBackTexts}>Mechanics : {item.mechanics !== undefined ? item.mechanics.map(x => { return x.name + ' ' }) : '-'} </Text>
+                        </View>
                     </ImageBackground>
-                    
-                    
+
+
                 </View>
             </FlipCard>
 
+        )
+    }
+    renderSpinner() {
+        return (
+            <View style={{ justifyContent: 'center', alignItems: 'center', height: ScreenHeight }}>
+                <ActivityIndicator size="large" />
+                <View style={{ alignItems: 'center' }}>
+                    <Text>Please Wait</Text>
+                    <Text>Card's Searching</Text>
+                </View>
+            </View>
         )
     }
 
@@ -74,13 +85,7 @@ class CardSearch extends Component {
                 />
                 <View>
                     {this.context.getSpinner ?
-                        <View style={{ justifyContent: 'center', alignItems: 'center', height: ScreenHeight }}>
-                            <ActivityIndicator size="large" />
-                            <View style={{ alignItems: 'center' }}>
-                                <Text>Please Wait</Text>
-                                <Text>Card's Searching</Text>
-                            </View>
-                        </View>
+                        this.renderSpinner()
                         :
                         <FlatList
                             data={this.context.getSearchingCardList}

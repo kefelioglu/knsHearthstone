@@ -1,8 +1,8 @@
 import {AppContext} from '../context/AppContext'
 
 export async function cardsAndMechanicsMaking(cards) {
-    var allCards = [];
-    var allMechanics = [];
+    let allCards = [];
+    let allMechanics = [];
     for (let name in cards) {
         cards[name].forEach(card => {
             if (card.mechanics!=undefined) {
@@ -20,7 +20,7 @@ export async function cardsAndMechanicsMaking(cards) {
 
 
 export async function cardListMaking(mechanicName,CardList) {
-    var selectedMechanicCardList = [];
+    let selectedMechanicCardList = [];
     CardList.map(card=>{
         card.mechanics.map(mechanic=>{
            if ( mechanic.name===mechanicName) {
@@ -32,7 +32,7 @@ return selectedMechanicCardList;
 }
 
 export async function listAllCards(cards){
-    var allCards = [];
+    let allCards = [];
     for (let name in cards) {
         cards[name].forEach(card => {
             allCards.push(card)

@@ -15,5 +15,9 @@ export default StyleSheet.create({
     },
     whiteText:{
         color:'#fff'
+    },
+    cardBackTexts:{
+        color:'#fff',
+        marginTop:10,
     }   
 })
